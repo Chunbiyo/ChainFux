@@ -1,0 +1,8 @@
+
+chmod +x setup.sh
+
+3. Run the Script
+
+Execute the script:
+
+./setup.sh
