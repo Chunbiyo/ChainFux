@@ -1,0 +1,38 @@
+File: .github/workflows/setup.yml
+
+name: ChainFux Setup
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        submodules: true
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Dependencies
+      run: |
+        npm install
+        for app in apps/*; do
+          if [ -f "$app/package.json" ]; then
+            echo "Installing dependencies for $app..."
+            cd $app
+            npm install
+            cd ../../
+          fi
+        done
+
+    - name: Run Tests (Optional)
+      run: npm test
