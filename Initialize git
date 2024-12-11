@@ -1,0 +1,48 @@
+
+Steps to Initialize Git:
+
+	1.	Navigate to the Root Directory
+
+cd /path/to/ChainFux
+
+
+	2.	Initialize Git
+Run the following command to initialize the repository:
+
+git init
+
+
+	3.	Add Submodules
+Add the repositories for Sanaa Music, Sin&JCX, and UNBNKD Wallet as submodules:
+
+git submodule add <Sanaa_Music_GitHub_URL> apps/sanaa_music
+git submodule add <Sin_JCX_GitHub_URL> apps/sin_jcx
+git submodule add <UNBNKD_Wallet_GitHub_URL> apps/unbnkd_wallet
+
+
+	4.	Create a .gitignore File
+Prevent unnecessary files from being tracked (e.g., node_modules, .env):
+
+echo "node_modules/" >> .gitignore
+echo ".env" >> .gitignore
+
+
+	5.	Stage and Commit Changes
+Stage all files and commit the initial repository structure:
+
+git add .
+git commit -m "Initial ChainFux repository setup"
+
+
+	6.	Link to a Remote Repository
+If you have a remote repository (e.g., on GitHub or GitLab), link it:
+
+git remote add origin <your_remote_repo_url>
+git push -u origin main
+
+Submodule Management
+
+To ensure submodules stay in sync:
+	•	Update submodules:
+
+git submodule update --
