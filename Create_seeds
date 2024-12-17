@@ -1,0 +1,10 @@
+npx knex seed:make seed_ethfuse_defi
+
+npx knex migrate:make create_ethfuse_defi_tables
+
+npx knex seed:make seed_sin_jcx
+
+npx knex migrate:make create_sin_jcx_tables
+
+npx knex migrate:make create_unbnkd_wallet_tables
+npx knex seed:make seed_unbnkd_wallet
