@@ -1,0 +1,56 @@
+name: Database Setup
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  database:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: chainfux
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          cd apps/sanaa_music && npm install
+          cd ../sin_jcx && npm install
+          cd ../unbnkd_wallet && npm install
+
+      - name: Run Migrations and Seeds for Sanaa Music
+        run: |
+          cd apps/sanaa_music
+          npx knex migrate:latest --knexfile=./database/config.js
+          npx knex seed:run --knexfile=./database/config.js
+
+      - name: Run Migrations and Seeds for Sin&JCX
+        run: |
+          cd apps/sin_jcx
+          npx knex migrate:latest --knexfile=./database/config.js
+          npx knex seed:run --knexfile=./database/config.js
+
+      - name: Run Migrations and Seeds for UNBNKD Wallet
+        run: |
+          cd apps/unbnkd_wallet
+          npx knex migrate:latest --knexfile=./database/config.js
+          npx knex seed:run --knexfile=./database/config.js
