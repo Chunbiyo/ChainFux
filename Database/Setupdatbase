@@ -1,0 +1,7 @@
+setu up dtabse
+cd apps/sanaa_music
+npm install knex pg dotenv
+run migrations
+npx knex migrate:latest --knexfile=./database/config.js
+run seeds
+npx knex seed:run --knexfile=./database/config.js
